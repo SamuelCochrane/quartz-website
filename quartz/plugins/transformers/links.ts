@@ -98,9 +98,9 @@ export const CrawlLinks: QuartzTransformerPlugin<Partial<Options> | undefined> =
                   !isExternal &&
                   node.children.length === 1 &&
                   node.children[0].type === "text" &&
-                  !fs.existsSync("./../quartz/content/"+dest.replaceAll("%20", " ")+".md")
+                  !fs.existsSync(path.join(".","..", "quartz", "content", dest.replaceAll("%20", " ")+".md"))
                 ) {
-                  // Add the 'broken' class markdown note does not exist
+                  // Add the 'broken' class if markdown note does not exist
                   classes.push("broken")
                 }
 
