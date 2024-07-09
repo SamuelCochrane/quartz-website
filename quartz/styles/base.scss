@@ -96,6 +96,13 @@ a {
         content: "#";
       }
     }
+    &.broken {
+      background-color: unset;
+      padding: unset;
+      color: var(--darkgray);
+      pointer-events: none;
+      user-select: text;
+  }
   }
 
   &.external .external-icon {

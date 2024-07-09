@@ -14,6 +14,7 @@ import path from "path"
 import { visit } from "unist-util-visit"
 import isAbsoluteUrl from "is-absolute-url"
 import { Root } from "hast"
+import fs from 'fs';
 
 interface Options {
   /** How to resolve Markdown paths */
@@ -91,6 +92,18 @@ export const CrawlLinks: QuartzTransformerPlugin<Partial<Options> | undefined> =
                   // Add the 'alias' class if the text content is not the same as the href
                   classes.push("alias")
                 }
+
+                // Check if the internal link is broken
+                if (
+                  !isExternal &&
+                  node.children.length === 1 &&
+                  node.children[0].type === "text" &&
+                  !fs.existsSync("./../quartz/content/"+dest.replaceAll("%20", " ")+".md")
+                ) {
+                  // Add the 'broken' class markdown note does not exist
+                  classes.push("broken")
+                }
+
                 node.properties.className = classes
 
                 if (isExternal && opts.openLinksInNewTab) {
